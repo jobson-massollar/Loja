@@ -5,13 +5,13 @@
 /// </summary>
 public record CPF
 {
-    public long Valor {  get; private set; }
+    public long Valor {  get; init; }
 
     /// <summary>
-    /// Esse construtor deveria ser privado, mas é público por conta do EF
+    /// Esse construtor deveria ser privado, mas é protegido por conta do EF
     /// </summary>
     /// <param name="valor">Valor numérico do CPF</param>
-    public CPF(long valor) => Valor = valor;
+    protected CPF(long valor) => Valor = valor;
 
     /// <summary>
     /// Método fábrica que valida e cria o CPF

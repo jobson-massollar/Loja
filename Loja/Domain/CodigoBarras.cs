@@ -10,13 +10,13 @@ public record CodigoBarras
     /// <summary>
     /// Valor numérico do código de barras
     /// </summary>
-    public string Valor { get; private set; }
+    public string Valor { get; init; }
 
     /// <summary>
-    /// Esse construtor deveria ser privado, mas é público por conta do EF
+    /// Esse construtor deveria ser privado, mas é protegido por conta do EF
     /// </summary>
     /// <param name="valor">Valor do código de barras</param>
-    public CodigoBarras(string valor) => Valor = valor;
+    protected CodigoBarras(string valor) => Valor = valor;
 
     /// <summary>
     /// Método fábrica que valida e constrói o código de barras

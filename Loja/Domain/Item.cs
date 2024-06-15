@@ -3,11 +3,11 @@
 namespace Loja.Domain;
 
 /// <summary>
-/// ENtidade que representa um item do pedido
+/// Entidade que representa um item do pedido
 /// </summary>
 public class Item : Entity<Item>
 {
-    public int Quantidade { get; private set; } = 0;
+    public int Quantidade { get; init; } = 0;
 
     public Dinheiro Preco { get; init; } = null!;
 
@@ -18,9 +18,9 @@ public class Item : Entity<Item>
     public float Valor => Quantidade * Preco.Valor;
 
     /// <summary>
-    /// Esse construtor deveria ser privado, mas é público por conta do EF
+    /// Esse construtor deveria ser privado, mas é protegido por conta do EF
     /// </summary>
-    public Item() { }
+    protected Item() { }
 
     /// <summary>
     /// Método fábrica que valida e cria um item do pedido

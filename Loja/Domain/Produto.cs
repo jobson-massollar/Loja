@@ -7,16 +7,16 @@ namespace Loja.Domain;
 /// </summary>
 public class Produto : Entity<Produto>
 {
-    public CodigoBarras CodigoBarras { get; private set; } = null!;
+    public CodigoBarras CodigoBarras { get; init; } = null!;
 
     public string Descricao { get; private set; } = string.Empty;
 
     public Dinheiro Preco { get; private set; } = null!;
 
     /// <summary>
-    /// Esse construtor deveria ser privado, mas é público por conta do EF
+    /// Esse construtor deveria ser privado, mas é protegido por conta do EF
     /// </summary>
-    public Produto() { }
+    protected Produto() { }
 
     /// <summary>
     /// Método fábrica que valida e cria um produto.

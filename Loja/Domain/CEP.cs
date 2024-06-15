@@ -5,13 +5,13 @@
 /// </summary>
 public record CEP
 {
-    public int Valor {  get; private set; }
+    public int Valor {  get; init; }
 
     /// <summary>
-    /// Esse construtor deveria ser privado, mas é público por conta do EF
+    /// Esse construtor deveria ser privado, mas é protegido por conta do EF
     /// </summary>
     /// <param name="valor">Número do CEP</param>
-    public CEP(int valor) => Valor = valor;
+    protected CEP(int valor) => Valor = valor;
 
     /// <summary>
     /// Método fábrica que valida e cria o Dinheiro

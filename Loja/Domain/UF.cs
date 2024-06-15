@@ -9,14 +9,14 @@ namespace Loja.Domain;
 /// </summary>
 public class UF : Entity<UF>
 {
-    public string Sigla { get; private set; } = null!;
+    public string Sigla { get; init; } = null!;
 
     public string Nome { get; private set; } = null!;
 
     /// <summary>
-    /// Esse construtor deveria ser privado, mas é público por conta do EF
+    /// Esse construtor deveria ser privado, mas é protegido por conta do EF
     /// </summary>
-    public UF() { }
+    protected UF() { }
 
     /// <summary>
     /// Método fábrica que valida e cria uma UF

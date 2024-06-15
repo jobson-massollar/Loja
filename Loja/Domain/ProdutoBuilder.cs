@@ -2,6 +2,9 @@
 
 namespace Loja.Domain;
 
+/// <summary>
+/// Builder para o Produto
+/// </summary>
 public class ProdutoBuilder
 {
     private string? numeroCodigoBarras;
@@ -9,8 +12,18 @@ public class ProdutoBuilder
     private string? moeda;
     private float? valor;
 
+    /// <summary>
+    /// Construtor que permite definir os dados do produto de forma individual
+    /// </summary>
     public ProdutoBuilder() { }
 
+    /// <summary>
+    /// Construtor que recebe os dados obrigatórios do produto
+    /// </summary>
+    /// <param name="numeroCodigoBarras">Número do código de barras</param>
+    /// <param name="descricao">Descrição</param>
+    /// <param name="moeda">Moeda usada no preço do produto</param>
+    /// <param name="valor">Preço do produto</param>
     public ProdutoBuilder(string numeroCodigoBarras, string descricao, string moeda, float valor)
     {
         this.numeroCodigoBarras = numeroCodigoBarras;
@@ -50,6 +63,10 @@ public class ProdutoBuilder
         return this;
     }
 
+    /// <summary>
+    /// Cria o produto com os dados definidos
+    /// </summary>
+    /// <returns>Produto ou lista de erros</returns>
     public Result<Produto> Build()
     {
         // Constroi os value objects

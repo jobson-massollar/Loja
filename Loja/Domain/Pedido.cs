@@ -7,18 +7,18 @@ namespace Loja.Domain;
 /// </summary>
 public class Pedido : Entity<Pedido>
 {
-    public virtual Cliente Cliente { get; private set; } = null!; // Lazy loading
+    public virtual Cliente Cliente { get; init; } = null!; // Lazy loading
 
-    public virtual Endereco EnderecoEntrega { get; private set; } = null!; // Lazy loading
+    public virtual Endereco EnderecoEntrega { get; init; } = null!; // Lazy loading
 
     public virtual List<Item> Itens { get;  private set; } = new(); // Lazy loading
 
     public float Total => Itens.Sum(i => i.Valor);
 
     /// <summary>
-    /// Esse construtor deveria ser privado, mas é público por conta do EF
+    /// Esse construtor deveria ser privado, mas é protegido por conta do EF
     /// </summary>
-    public Pedido() { }
+    protected Pedido() { }
 
     /// <summary>
     /// Método fábrica que valida e cria um pedido

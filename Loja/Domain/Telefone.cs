@@ -13,14 +13,14 @@ public record Telefone
     /// <summary>
     /// Esse construtor não deveria existir, mas existe por conta do EF
     /// </summary>
-    public Telefone() { }
+    protected Telefone() { }
 
     /// <summary>
-    /// Esse construtor deveria ser privado, mas é público por conta do EF
+    /// Esse construtor deveria ser privado, mas é protegido por conta do EF
     /// </summary>
     /// <param name="ddd">DDD</param>
     /// <param name="numero">Número do telefone</param>
-    public Telefone(int? ddd, int? numero) {  
+    protected Telefone(int? ddd, int? numero) {  
         DDD = ddd; 
         Numero = numero;
     }
@@ -34,7 +34,7 @@ public record Telefone
     public static Telefone? Create(int? ddd, int? numero)
     {
         // Se existir, numero deve ter 7 ou 8 dígitos
-        if (numero is int valorNumero && (numero < 20000000 || numero > 999999999))
+        if (numero is int valorNumero && (numero < 20000000 || numero > 999999999 || ))
             return null;
 
         // Se existir, o DDD deve ter 2 dígitos e o número é obrigatório

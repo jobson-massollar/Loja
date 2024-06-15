@@ -22,7 +22,7 @@ public static class MensagemErro
            { ErroEntidade.CLIENTE_NOME_INVALIDO, "Nome do cliente não pode ficar em branco" },
            { ErroEntidade.CLIENTE_EMAIL_INVALIDO, "E-mail do cliente inválido" },
            { ErroEntidade.CLIENTE_ENDERECO_INVALIDO, "Endereço do cliente não fornecido" },
-           { ErroEntidade.CLIENTE_TELEFONE_INVALIDO, "Yelefone do cliente não fornecido" },
+           { ErroEntidade.CLIENTE_TELEFONE_INVALIDO, "Telefone do cliente inválido. Forneça DDD e número" },
            { ErroEntidade.CLIENTE_CPF_JA_EXISTE, "Já existe um cliente com esse CPF" },
            { ErroEntidade.CLIENTE_EMAIL_JA_EXISTE, "Já existe um cliente com esse e-mail" },
 

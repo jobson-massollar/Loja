@@ -3,7 +3,7 @@
 namespace Loja.Domain;
 
 /// <summary>
-/// Builder para a classe cliente e suas referências
+/// Builder para o Cliente
 /// </summary>
 public class ClienteBuilder
 {
@@ -24,7 +24,7 @@ public class ClienteBuilder
     private Endereco? endereco;
 
     /// <summary>
-    /// Construtor que permite definir os atributos do cliente de forma individual
+    /// Construtor que permite definir os dados do cliente de forma individual
     /// </summary>
     public ClienteBuilder()
     {
@@ -32,7 +32,7 @@ public class ClienteBuilder
     }
 
     /// <summary>
-    /// Construtor que os atributos detalhados e obrigatórios do cliente
+    /// Construtor que recebe os dados obrigatórios do cliente
     /// </summary>
     /// <param name="numeroCPF">Número do CPF</param>
     /// <param name="nome">Nome</param>
@@ -60,7 +60,7 @@ public class ClienteBuilder
     }
 
     /// <summary>
-    /// COnstrutor que recebe os dados obrigatórios do cliente e o objeto endereço já pronto
+    /// Construtor que recebe os dados obrigatórios do cliente e o objeto endereço já pronto
     /// </summary>
     /// <param name="numeroCPF">Número do CPF</param>
     /// <param name="nome">Nome</param>
@@ -144,6 +144,10 @@ public class ClienteBuilder
         return this;
     }
 
+    /// <summary>
+    /// Cria o cliente com os dados definidos
+    /// </summary>
+    /// <returns>Cliente ou lista de erros</returns>
     public Result<Cliente> Builder()
     {
         List<ErroEntidade> erros = [];
@@ -170,11 +174,14 @@ public class ClienteBuilder
 
         if (resultCliente.hasErrors)
         {
-            erros.Concat(resultCliente.Errors!);
+            // Se ocorreu o erro e o endereço é nulo, então os erros sobre o endereço já estão na lista
+            // Remove o erro criado pelo cliente
+            if (endereco is null)
+                resultCliente.Errors!.Remove(ErroEntidade.CLIENTE_ENDERECO_INVALIDO);
 
-            return erros;
+            erros.Concat(resultCliente.Errors!);
         }
-        else
-            return resultCliente.Value!;
+
+        return erros.Count == 0 ? resultCliente.Value! : erros;
     }
 }

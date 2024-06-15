@@ -7,17 +7,17 @@ namespace Loja.Domain;
 /// </summary>
 public class Preferencia: Entity<Preferencia>
 {
-    public string Descricao { get; private set; } = null!;
+    public string Descricao { get; init; } = null!;
 
     public virtual List<Cliente> Clientes { get; private set; } = null!;
 
     /// <summary>
-    /// Esse construtor deveria ser privado, mas é público por conta do EF
+    /// Esse construtor deveria ser privado, mas é protegido por conta do EF
     /// </summary>
-    public Preferencia() { }
+    protected Preferencia() { }
 
     /// <summary>
-    /// 
+    /// Método fábrica que valida e cria uma preferência
     /// </summary>
     /// <param name="descricao"></param>
     /// <returns></returns>
@@ -25,11 +25,7 @@ public class Preferencia: Entity<Preferencia>
     {
         List<ErroEntidade> erros = valida(descricao);
 
-        return erros.Count == 0 ? new Preferencia()
-        {
-            Descricao = descricao,
-        } :
-        erros;
+        return erros.Count == 0 ? new Preferencia { Descricao = descricao } : erros;
     }
 
     /// <summary>

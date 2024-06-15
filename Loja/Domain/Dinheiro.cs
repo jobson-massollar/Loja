@@ -10,11 +10,11 @@ public record Dinheiro
     public float Valor { get; private set; }
 
     /// <summary>
-    /// Esse construtor deveria ser privado, mas é público por conta do EF
+    /// Esse construtor deveria ser privado, mas é protegido por conta do EF
     /// </summary>
     /// <param name="moeda">Símbolo da moeda</param>
     /// <param name="valor">Valor monetário</param>
-    public Dinheiro(string moeda, float valor)
+    protected Dinheiro(string moeda, float valor)
     {
         Moeda = moeda;
         Valor = valor;

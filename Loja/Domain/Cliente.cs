@@ -7,13 +7,13 @@ namespace Loja.Domain;
 /// </summary>
 public class Cliente : Entity<Cliente>
 {
-    public CPF CPF { get; private set; } = null!;
+    public CPF CPF { get; init; } = null!;
 
-    public string Nome { get; private set; } = string.Empty;
+    public string Nome { get; private set; } = null!;
 
-    public string Email { get; private set; } = string.Empty;
+    public string Email { get; private set; } = null!;
 
-    public Telefone Telefone { get; set; } = null!;
+    public required Telefone Telefone { get; set; } = null!;
 
     public virtual Endereco Endereco { get; set; } = null!; // Lazy loading
 
@@ -22,9 +22,9 @@ public class Cliente : Entity<Cliente>
     public virtual List<Pedido> Pedidos { get; private set; } = null!; // Lazy loading
 
     /// <summary>
-    /// Esse construtor deveria ser privado, mas é público por conta do EF
+    /// Esse construtor deveria ser privado, mas é protegido por conta do EF
     /// </summary>
-    public Cliente() { }
+    protected Cliente() { }
 
     /// <summary>
     /// Método fábrica que valida e cria o cliente

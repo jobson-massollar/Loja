@@ -20,9 +20,9 @@ public class Endereco: Entity<Endereco>
     public virtual UF UF { get; private set; } = null!; // Lazy loading
 
     /// <summary>
-    /// Esse construtor deveria ser privado, mas é público por conta do EF
+    /// Esse construtor deveria ser privado, mas é protegido por conta do EF
     /// </summary>
-    public Endereco() { }
+    protected Endereco() { }
 
     /// <summary>
     /// Método fábrica que valida e cria um endereço
