@@ -9,7 +9,7 @@ using Loja.Db;
  */
 
 // Use essa opção para definir que parte do programa vai ser executada
-const int opcao = 4;
+const int opcao = 1;
 
 var db = Sessao.dbContext;
 
