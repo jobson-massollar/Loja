@@ -23,10 +23,17 @@ public class LojaDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
+        /* 
+         * Na linha comentada abaixo eu criei um serviço para gerar as triggers de 
+         * atualização do campo UpdatedAt da tabelas, mas está na sintaxe do SQLite.
+         * Se rodar no PostgreSQL deve dar pau, então eu comentei.
+         * Não sei se a gente vai usar isso no sistema da Go Bee.
+         */
+
         optionsBuilder
             .UseLazyLoadingProxies()
-            .ReplaceService<IMigrationsModelDiffer, InsertSqlCommands>()
-            .UseSqlite("Data Source=c:\\projetos\\Loja.db");
+            //.ReplaceService<IMigrationsModelDiffer, InsertSqlCommands>()
+            .UseSqlite("Data Source=..\\..\\..\\Loja.db");
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
