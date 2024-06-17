@@ -34,7 +34,7 @@ public record Telefone
     public static Telefone? Create(int? ddd, int? numero)
     {
         // Se existir, numero deve ter 7 ou 8 dígitos
-        if (numero is int valorNumero && (numero < 20000000 || numero > 999999999 || ))
+        if (numero is int valorNumero && (numero < 20000000 || numero > 999999999 || ddd is null))
             return null;
 
         // Se existir, o DDD deve ter 2 dígitos e o número é obrigatório
