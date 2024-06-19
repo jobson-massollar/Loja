@@ -23,25 +23,25 @@ public class InsertSqlCommands : Microsoft.EntityFrameworkCore.Migrations.Intern
         var operations = base.GetDifferences(source, target);
 
         var createTriggerOperations = new List<SqlOperation>();
+        var dropTriggerOperations = new List<SqlOperation>();
+        var sourceModel = source?.Model;
         var targetModel = target?.Model;
-        var entityTypes = targetModel?.GetEntityTypes();
+        var oldEntityTypes = sourceModel?.GetEntityTypes();
+        var newEntityTypes = targetModel?.GetEntityTypes();
+        var commonEntityTypes = oldEntityTypes is null || newEntityTypes is null ? (List<IEntityType>)[] : oldEntityTypes.Intersect(newEntityTypes).ToList();
+        var deletedEntityTypes = oldEntityTypes is not null ? oldEntityTypes.Except(commonEntityTypes).ToList() : (List<IEntityType>)[];
+        var insertedEntityTypes = newEntityTypes is not null ? newEntityTypes.Except(commonEntityTypes).ToList() : (List<IEntityType>)[];
 
-        if (entityTypes != null)
+        if (deletedEntityTypes != null)
         {
-            foreach (var entity in entityTypes)
+            foreach (var entity in deletedEntityTypes)
             {
                 try
                 {
-                    var annotation = entity.GetAnnotation("UPDATE-TRIGGER-" + entity.GetTableName());
+                    var annotation = entity.GetAnnotation("DROP-UPDATE-TRIGGER-" + entity.GetTableName());
 
                     if (annotation is not null && annotation.Value is string str)
-                    {
-                        var sql = new SqlOperation
-                        {
-                            Sql = str
-                        };
-                        createTriggerOperations.Add(sql);
-                    }
+                        dropTriggerOperations.Add(new SqlOperation { Sql = str });
                 }
                 catch (Exception _)
                 {
@@ -50,6 +50,24 @@ public class InsertSqlCommands : Microsoft.EntityFrameworkCore.Migrations.Intern
             }
         }
 
-        return new List<MigrationOperation>(operations).Concat(createTriggerOperations).ToList();
+        if (newEntityTypes != null)
+        {
+            foreach (var entity in newEntityTypes)
+            {
+                try
+                {
+                    var annotation = entity.GetAnnotation("CREATE-UPDATE-TRIGGER-" + entity.GetTableName());
+
+                    if (annotation is not null && annotation.Value is string str)
+                        createTriggerOperations.Add(new SqlOperation { Sql = str });
+                }
+                catch (Exception _)
+                {
+                }
+
+            }
+        }
+
+        return new List<MigrationOperation>(dropTriggerOperations).Concat(operations).Concat(createTriggerOperations).ToList();
     }
 }

@@ -13,6 +13,8 @@ public class Produto : Entity<Produto>
 
     public Dinheiro Preco { get; private set; } = null!;
 
+    public string Status { get; private set; } = string.Empty;
+
     /// <summary>
     /// Esse construtor deveria ser privado, mas é protegido por conta do EF
     /// </summary>

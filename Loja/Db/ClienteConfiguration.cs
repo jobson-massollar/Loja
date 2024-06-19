@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Loja.Domain;
+using Microsoft.EntityFrameworkCore;
 
 namespace Loja.Db;
 
@@ -14,6 +15,8 @@ public class ClienteConfiguration : EntityConfiguration<Cliente>
         builder.Property(c => c.Email).HasMaxLength(100);
 
         builder.HasIndex(c => c.Email).IsUnique();
+
+        builder.HasOne(c => c.Endereco).WithOne(e => e.Cliente).OnDelete(DeleteBehavior.Cascade);
 
         builder.OwnsOne(p => p.CPF, cpfBuilder =>
         {

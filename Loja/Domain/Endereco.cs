@@ -19,6 +19,14 @@ public class Endereco: Entity<Endereco>
 
     public virtual UF UF { get; private set; } = null!; // Lazy loading
 
+    public Guid? ClienteId { get; private set; }
+
+    public virtual Cliente Cliente { get; private set; } = null!;
+
+    public Guid? PedidoId { get; private set; }
+
+    public virtual Pedido Pedido { get; private set; } = null!;
+
     /// <summary>
     /// Esse construtor deveria ser privado, mas é protegido por conta do EF
     /// </summary>

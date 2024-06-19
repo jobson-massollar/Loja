@@ -25,21 +25,50 @@ public class EntityConfiguration<T> : IEntityTypeConfiguration<T>
         {
             var nomeTabela = builder.Metadata.GetTableName();
 
-            var trigger = @$"
-DROP TRIGGER IF EXISTS {nomeTabela}_{sufixoNomeTrigger};
+            var createTrigger = @$"
 CREATE TRIGGER IF NOT EXISTS {nomeTabela}_{sufixoNomeTrigger} 
-         AFTER UPDATE
-            ON {nomeTabela}
-          WHEN old.UpdatedAt <> CURRENT_TIMESTAMP
+    AFTER UPDATE
+    ON {nomeTabela}
+    WHEN old.UpdatedAt <> CURRENT_TIMESTAMP
 BEGIN
     UPDATE {nomeTabela}
-       SET UpdatedAt = CURRENT_TIMESTAMP
-     WHERE id = OLD.id;
+    SET UpdatedAt = CURRENT_TIMESTAMP
+    WHERE id = OLD.id;
 END;
 ";
 
-            tipoEntidade.AddAnnotation("UPDATE-TRIGGER-" + nomeTabela, trigger);
-            tipoEntidade.AddTrigger($"{nomeTabela}_{sufixoNomeTrigger}");
+            /*
+CREATE TRIGGER IF NOT EXISTS {nomeTabela}_{sufixoNomeTrigger} 
+    AFTER UPDATE
+    ON {nomeTabela}
+    WHEN old.UpdatedAt <> CURRENT_TIMESTAMP
+BEGIN
+    UPDATE {nomeTabela}
+    SET UpdatedAt = CURRENT_TIMESTAMP
+    WHERE id = OLD.id;
+END;
+         
+            var x = $@"
+CREATE OR REPLACE FUNCTION f_{nomeTabela}_{sufixoNomeTrigger}()
+    RETURNS TRIGGER LANGUAGE PLPGSQL AS $$
+BEGIN
+    NEW.""UpdatedAt"" := CURRENT_TIMESTAMP
+    RETURN NEW;
+END;
+$$
+
+CREATE OR REPLACE TRIGGER {nomeTabela}_{sufixoNomeTrigger}
+AFTER UPDATE
+ON {nomeTabela}
+FOR EACH ROW
+EXECUTE FUNCTION f_{nomeTabela}_{sufixoNomeTrigger}();
+";
+             */
+            var dropTrigger = $"DROP TRIGGER IF EXISTS {nomeTabela}_{sufixoNomeTrigger};";
+
+            tipoEntidade.AddAnnotation("CREATE-UPDATE-TRIGGER-" + nomeTabela, createTrigger);
+            tipoEntidade.AddAnnotation("DROP-UPDATE-TRIGGER-" + nomeTabela, dropTrigger);
+            //tipoEntidade.AddTrigger($"{nomeTabela}_{sufixoNomeTrigger}");
         }
     }
 }

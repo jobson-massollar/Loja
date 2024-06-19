@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Loja.Domain;
+using Microsoft.EntityFrameworkCore;
 
 namespace Loja.Db;
 
@@ -14,6 +15,8 @@ public class EnderecoConfiguration : EntityConfiguration<Endereco>
         builder.Property(e => e.Complemento).HasMaxLength(30);
 
         builder.Property(e => e.Bairro).HasMaxLength(30);
+
+        builder.HasOne(e => e.UF).WithMany().OnDelete(DeleteBehavior.Restrict);
 
         builder.ComplexProperty(e => e.Cep);
 

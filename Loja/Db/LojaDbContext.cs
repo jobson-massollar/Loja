@@ -32,8 +32,8 @@ public class LojaDbContext : DbContext
 
         optionsBuilder
             .UseLazyLoadingProxies()
-            //.ReplaceService<IMigrationsModelDiffer, InsertSqlCommands>()
-            .UseSqlite("Data Source=..\\..\\..\\Loja.db");
+            .ReplaceService<IMigrationsModelDiffer, InsertSqlCommands>()
+            .UseSqlite("Data Source=c:\\projetos\\CSharp\\Loja\\LojaConsole.db");
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
